@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hybrid Cooking Oil Market Analysis - Hyderabad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F0F4F8; /* Soft Light Blue/Gray Background */
+            color: #1F2937; /* Dark Gray Text */
+        }
+        h1, h2, h3, h4, strong, .text-gray-800 {
+            color: #1F2937; /* Ensure titles and strong text are dark */
+        }
+        .dashboard-card {
+            background-color: #FFFFFF; /* Pure White Cards */
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08); 
+            transition: all 0.3s ease;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            height: 35vh;
+            max-height: 380px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 40vh;
+            }
+        }
+        .metric-card-sm {
+            background-color: #E8F4F7; /* Very light Teal for small metrics */
+            border: 1px solid #B2EBF2;
+        }
+        .result-card-lg {
+            background-color: #F0FCFF; 
+            border: 2px solid #00838F; /* Deep Teal Primary Accent */
+            box-shadow: 0 4px 8px rgba(0, 131, 143, 0.15);
+        }
+        .tab-button {
+            border: 1px solid transparent;
+            transition: all 0.2s;
+            border-radius: 6px 6px 0 0;
+            padding: 10px 16px;
+            font-weight: 600;
+        }
+        .tab-button.active {
+            background-color: #00838F; /* Deep Teal */
+            color: white;
+            border-color: #00838F;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+        .tab-button:not(.active) {
+            background-color: #F9FAFB;
+            color: #4B5563;
+            border-color: #E5E7EB;
+        }
+        .ai-output-box {
+            background-color: #FFFDEE; /* Very light Amber for AI boxes */
+            border: 1px dashed #FFA000; /* Amber Gold */
+            min-height: 120px;
+            border-radius: 8px;
+        }
+        .table-header {
+            background-color: #F3F4F6;
+        }
+        
+        /* Input fields in light mode */
+        select, input[type="number"] {
+            background-color: #FFFFFF !important;
+            border-color: #D1D5DB !important;
+            color: #1F2937 !important;
+        }
+        .text-gray-500 {
+            color: #6B7280;
+        }
+        .text-gray-600 {
+            color: #4B5563;
+        }
+        .text-indigo-700 {
+            color: #00838F; /* Teal for primary accents */
+        }
+        .text-red-500, .text-red-600 {
+            color: #EF4444; 
+        }
+        .text-yellow-500 {
+            color: #FFA000; /* Gold for AI sparkle */
+        }
+        .text-green-600 {
+            color: #10B981; 
+        }
+
+        /* Specific Table Text adjustments */
+        #national-price-table-body td, #local-price-table-body2 td {
+            color: #4B5563;
+        }
+        #national-price-table-body .font-extrabold, #local-price-table-body2 .font-extrabold {
+             color: #1F2937;
+        }
+
+        
+        .loading-spinner {
+            border: 4px solid #E5E7EB; 
+            border-top: 4px solid #00838F; /* Teal spinner */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-extrabold">Online Edible Oil Market Analysis</h1>
+            <p class="mt-2 text-xl font-medium text-gray-600">Strategic Dashboard for Homemade Oil Suppliers in Hyderabad</p>
+        </header>
+
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Left Column: Comparison & Details (2/3 width on desktop) -->
+            <section class="lg:col-span-2 space-y-8">
+                
+                <!-- Metrics Bar -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 dashboard-card p-4">
+                    <div class="metric-card-sm p-4 rounded-lg text-center">
+                        <h3 class="text-xs font-semibold uppercase text-gray-500">National Platforms</h3>
+                        <p id="platforms-count" class="text-3xl font-bold text-indigo-700">8</p>
+                    </div>
+                    <div class="metric-card-sm p-4 rounded-lg text-center">
+                        <h3 class="text-xs font-semibold uppercase text-gray-500">National Avg. Price/Liter</h3>
+                        <p id="average-price" class="text-3xl font-bold text-indigo-700">₹0</p>
+                    </div>
+                    <div class="metric-card-sm p-4 rounded-lg text-center">
+                        <h3 class="text-xs font-semibold uppercase text-gray-500">Highest Commission</h3>
+                        <p id="highest-commission" class="text-xl md:text-2xl font-bold text-red-500">-</p>
+                    </div>
+                </div>
+
+                <!-- Tabbed Comparison Section -->
+                <div class="dashboard-card p-6">
+                    <h2 class="text-xl font-bold mb-4 text-gray-800">Market Competitor Analysis</h2>
+
+                    <!-- Tabs -->
+                    <div class="flex border-b border-gray-300 mb-6">
+                        <button id="tab-national-btn" class="tab-button active" onclick="setActiveTab('national')">
+                            1. Top 8 National Brands
+                        </button>
+                        <button id="tab-local-btn" class="tab-button ml-2" onclick="setActiveTab('local')">
+                            2. Top 8 Local Brands
+                        </button>
+                    </div>
+
+                    <!-- National Content (Active by default) -->
+                    <div id="tab-national-content" class="tab-content space-y-6">
+                         <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-700">Price Comparison Chart</h3>
+                            <select id="cut-filter-national" class="w-full sm:w-auto bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5">
+                            </select>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="nationalPriceChart"></canvas>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-700 mt-8">National Pricing & Commission Details (Retail Prices)</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left text-gray-500 border border-gray-200 rounded-lg overflow-hidden">
+                                <thead class="text-xs text-gray-700 uppercase table-header">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3">Platform</th>
+                                        <th scope="col" class="px-3 py-3">250ml</th>
+                                        <th scope="col" class="px-3 py-3">500ml</th>
+                                        <th scope="col" class="px-3 py-3">1L</th>
+                                        <th scope="col" class="px-3 py-3">2L</th>
+                                        <th scope="col" class="px-6 py-3">Est. Commission %</th>
+                                        <th scope="col" class="px-6 py-3">Price / Liter (₹)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="national-price-table-body">
+                                    <!-- JS will populate this -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Local Content (Hidden by default) -->
+                    <div id="tab-local-content" class="tab-content hidden space-y-6">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-700">Price Comparison Chart</h3>
+                            <select id="cut-filter-local" class="w-full sm:w-auto bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5">
+                            </select>
+                        </div>
+                         <div class="chart-container">
+                            <canvas id="localPriceChart2"></canvas>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-700 mt-8">Local Pricing & Commission Details (Archetypes)</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left text-gray-500 border border-gray-200 rounded-lg overflow-hidden">
+                                <thead class="text-xs text-gray-700 uppercase table-header">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3">Archetype / Brand</th>
+                                        <th scope="col" class="px-3 py-3">250ml</th>
+                                        <th scope="col" class="px-3 py-3">500ml</th>
+                                        <th scope="col" class="px-3 py-3">1L</th>
+                                        <th scope="col" class="px-3 py-3">2L</th>
+                                        <th scope="col" class="px-6 py-3">Est. Commission %</th>
+                                        <th scope="col" class="px-6 py-3">Price / Liter (₹)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="local-price-table-body2">
+                                    <!-- JS will populate this -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Right Column: Action Sidebar (1/3 width on desktop) -->
+            <section class="lg:col-span-1 space-y-8">
+                
+                <!-- 4. Partnership Profit Modeling Container (Hybrid) -->
+                <div id="profit-modeling" class="dashboard-card p-6 border-2 border-indigo-700">
+                    <h2 class="text-xl font-bold mb-4 flex items-center text-gray-800">
+                        <span class="mr-2 text-2xl">💰</span> Profit Modeler
+                    </h2>
+                    <p class="text-xs text-gray-600 mb-4">
+                        Calculate **Retail Price** and profit breakdown for any volume and partnership.
+                    </p>
+
+                    <div class="space-y-4 mb-6">
+                        <!-- Input 1: Quantity Selector -->
+                        <div>
+                            <label for="input-quantity" class="block text-sm font-medium text-gray-700">1. Select Volume</label>
+                            <select id="input-quantity" class="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5">
+                                <option value="0.25">250ml</option>
+                                <option value="0.5" selected>500ml</option>
+                                <option value="1">1 Liter</option>
+                                <option value="2">2 Liters</option>
+                            </select>
+                        </div>
+                        <!-- Input 2: COGS per Liter -->
+                        <div>
+                            <label for="input-cogs" class="block text-sm font-medium text-gray-700">2. Your COGS (₹/Liter)</label>
+                            <input type="number" id="input-cogs" value="180" min="1" class="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5">
+                        </div>
+                        <!-- Input 3: Target Margin -->
+                        <div>
+                            <label for="input-margin" class="block text-sm font-medium text-gray-700">3. Your Target Gross Margin (%)</label>
+                            <input type="number" id="input-margin" value="35" min="5" max="60" class="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5">
+                        </div>
+                        <!-- Input 4: Platform Selection (Hybrid) -->
+                        <div>
+                            <label for="select-platform" class="block text-sm font-medium text-gray-700">4. Select Target Platform</label>
+                            <select id="select-platform" class="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5">
+                                <!-- Options populated by JS -->
+                            </select>
+                            <p id="commission-display" class="text-xs text-red-600 mt-1 font-semibold">Commission: 18%</p>
+                        </div>
+                        <!-- Button -->
+                        <button id="calculate-profit-btn" class="w-full bg-indigo-700 hover:bg-indigo-800 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-150 shadow-lg">
+                            Calculate Pricing
+                        </button>
+                    </div>
+
+                    <!-- Results Display -->
+                    <div id="profit-results" class="grid grid-cols-2 gap-3 pt-4 border-t border-gray-200">
+                        <!-- Metric B: Retail Price -->
+                        <div class="result-card-lg p-3 rounded-lg text-center">
+                            <h4 class="text-xs font-bold text-indigo-700 uppercase">Retail Price</h4>
+                            <p id="output-retail-price" class="text-xl font-extrabold text-gray-800 mt-1">₹0</p>
+                        </div>
+                        <!-- Metric A: Supplier Sale Price -->
+                        <div class="result-card-lg p-3 rounded-lg text-center">
+                            <h4 class="text-xs font-bold text-indigo-700 uppercase">Your Sale Price</h4>
+                            <p id="output-supplier-price" class="text-xl font-extrabold text-gray-800 mt-1">₹0</p>
+                        </div>
+                        <!-- Metric C: Your Gross Profit -->
+                        <div class="metric-card-sm p-3 rounded-lg text-center">
+                            <h4 class="text-xs font-semibold text-gray-600 uppercase">Your Gross Profit</h4>
+                            <p id="output-supplier-profit" class="text-lg font-bold text-gray-800 mt-1">₹0</p>
+                        </div>
+                         <!-- Metric D: Brand Gross Margin -->
+                        <div class="metric-card-sm p-3 rounded-lg text-center">
+                            <h4 class="text-xs font-semibold text-gray-600 uppercase">Brand Gross Margin</h4>
+                            <p id="output-brand-margin" class="text-lg font-bold text-gray-800 mt-1">₹0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Pricing Strategy -->
+                 <div id="pricing-advisor" class="dashboard-card p-6">
+                    <h2 class="text-xl font-bold mb-4 flex items-center text-gray-800">
+                        <span class="mr-2 text-2xl text-yellow-500">✨</span> AI Pricing Strategy Advisor
+                    </h2>
+                    <p class="text-xs text-gray-600 mb-4">
+                        Analyzes the National Market for the current oil type and recommends a strategic price positioning.
+                    </p>
+
+                    <button id="analyze-pricing-btn" class="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold py-2.5 px-4 rounded-lg transition duration-150 shadow-lg mb-4">
+                        Analyze Market & Recommend Price
+                    </button>
+
+                    <div id="pricing-strategy-output" class="ai-output-box p-4 text-sm text-gray-800">
+                        Click 'Analyze Market & Recommend Price' for strategic advice.
+                    </div>
+                </div>
+            
+                <!-- AI Marketing Copy Generator -->
+                <div id="copywriter" class="dashboard-card p-6">
+                    <h2 class="text-xl font-bold mb-4 flex items-center text-gray-800">
+                        <span class="mr-2 text-2xl text-yellow-500">✨</span> Marketing Copy Generator
+                    </h2>
+                    <p class="text-xs text-gray-600 mb-4">
+                        Generate social media copy tailored to your oil and target platform's marketing style.
+                    </p>
+
+                    <div class="space-y-3 mb-4">
+                        <div>
+                            <label for="copy-cut" class="block text-xs font-medium text-gray-700">Oil Type</label>
+                            <select id="copy-cut" class="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5">
+                            </select>
+                        </div>
+                        <div>
+                            <label for="copy-tone" class="block text-xs font-medium text-gray-700">Target Tone/Platform</label>
+                            <select id="copy-tone" class="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5">
+                                <option value="Health & Quality Focus (Amazon Fresh style)">Health & Quality Focus</option>
+                                <option value="Best Value & Bulk (BigBasket style)">Best Value & Bulk</option>
+                                <option value="Traditional & Homemade (Local Vendor style)">Traditional & Homemade</option>
+                            </select>
+                        </div>
+                        <button id="generate-copy-btn" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-150 shadow-lg">
+                            Draft Marketing Post
+                        </button>
+                    </div>
+
+                    <div id="marketing-copy-output" class="ai-output-box p-4 text-sm text-gray-800">
+                        Select options and click 'Draft Marketing Post'.
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Recommendations (Below Main Dashboard) -->
+        <section id="recommendations" class="mt-12">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800">Partnership Recommendations for Profitability</h2>
+                <p class="mt-2 text-lg text-gray-600">Based on the Edible Oil market analysis, here are three potential partnership strategies.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="recommendation-card dashboard-card p-6 rounded-xl border border-gray-200">
+                    <h3 class="text-xl font-extrabold mb-3 text-indigo-700 flex items-center">1. Premium Quality Partner</h3>
+                    <p class="font-medium text-gray-800 mb-2">National: **Amazon Fresh** (15%) | Local: **Ghani Oil Master** (12%)</p>
+                    <p class="text-gray-600 text-sm">
+                        <strong class="text-gray-700">Strategy:</strong> Focus on specialty oils like **Sesame or Coconut CP**. Amazon Fresh targets health-conscious consumers willing to pay a premium. Use **Ghani Oil Master** locally for niche direct sales. This model maximizes the retail price ceiling and brand image.
+                        <br><br>
+                        <strong class="text-gray-700">Pros:</strong> Highest potential retail price and brand value (focus on 'homemade', 'cold-pressed').
+                        <br>
+                        <strong class="text-gray-700">Cons:</strong> Requires expensive certifications and quality assurance.
+                    </p>
+                </div>
+                <div class="recommendation-card dashboard-card p-6 rounded-xl border border-gray-200">
+                    <h3 class="text-xl font-extrabold mb-3 text-indigo-700 flex items-center">2. High Volume / Quick Commerce Partner</h3>
+                    <p class="font-medium text-gray-800 mb-2">National: **Zepto/Blinkit** (18-20%) | Local: **Local Kirana Partner** (10%)</p>
+                    <p class="text-gray-600 text-sm">
+                       <strong class="text-gray-700">Strategy:</strong> Supply your most popular oil, like **Groundnut CP**, to quick commerce apps. The rapid visibility and volume ensure constant throughput, ideal for 500ml/1L packs. Locally, a low-commission partner (10%) helps clear high volume at a sharp competitive price point.
+                       <br><br>
+                       <strong class="text-gray-700">Pros:</strong> Massive customer reach and quick inventory turnover. Ideal for launching value packs.
+                       <br>
+                       <strong class="text-gray-700">Cons:</b> Intense pressure to meet tight delivery schedules and competitive pricing.
+                    </p>
+                </div>
+                 <div class="recommendation-card dashboard-card p-6 rounded-xl border border-gray-200">
+                    <h3 class="text-xl font-extrabold mb-3 text-indigo-700 flex items-center">3. Marketplace & Value Partner</h3>
+                    <p class="font-medium text-gray-800 mb-2">National: **BigBasket (Fresho)** (12%) | Local: **Value Oil Wholesaler** (8%)</p>
+                    <p class="text-gray-600 text-sm">
+                        <strong class="text-gray-700">Strategy:</strong> This is the lowest national commission option. **BigBasket** provides massive grocery traffic and a 12% commission. Use this for 2L or bulk packs to maximize order value and net profit. The local **Value Oil Wholesaler** (8% commission) handles large direct orders, securing the best overall net margin on high-volume production.
+                        <br><br>
+                        <strong class="text-gray-700">Pros:</strong> Lowest commission for high national reach; best net profit margin potential.
+                        <br>
+                        <strong class="text-gray-700">Cons:</strong> Must compete heavily on value.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <footer class="text-center mt-12 pt-8 border-t border-gray-200">
+            <p class="text-gray-500 text-sm">&copy; 2025 Edible Oil Market Insights. Strategic analysis powered by Gemini LLM.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const API_KEY = ""; 
+        const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent";
+
+        // Oil price data for Hyderabad (Price per Liter, Commission %) - TOP 8 NATIONAL BRANDS (E-Commerce/Quick Commerce)
+        const nationalMarketData = [
+            // Cold Pressed Groundnut Oil (Most Common)
+            { platform: 'BigBasket (BB Popular)', cut: 'Groundnut Cold Pressed', prices: { '0.25': null, '0.5': 155, '1': 290, '2': 560 }, perLiter: 280, commission: 12 },
+            { platform: 'Zepto (Store Brand)', cut: 'Groundnut Cold Pressed', prices: { '0.25': 85, '0.5': 170, '1': 320, '2': null }, perLiter: 320, commission: 18 },
+            { platform: 'Amazon Fresh (Local Brand)', cut: 'Groundnut Cold Pressed', prices: { '0.25': null, '0.5': 180, '1': 350, '2': null }, perLiter: 350, commission: 15 },
+            { platform: 'JioMart (Reliance CP Oil)', cut: 'Groundnut Cold Pressed', prices: { '0.25': 75, '0.5': 150, '1': 280, '2': 550 }, perLiter: 275, commission: 10 },
+            
+            // Cold Pressed Sesame Oil (Mid/Specialty)
+            { platform: 'BigBasket (BB Popular)', cut: 'Sesame Cold Pressed', prices: { '0.25': 105, '0.5': 210, '1': 410, '2': null }, perLiter: 410, commission: 12 },
+            { platform: 'Amazon Fresh (Local Brand)', cut: 'Sesame Cold Pressed', prices: { '0.25': 115, '0.5': 230, '1': 450, '2': null }, perLiter: 450, commission: 15 },
+            { platform: 'Blinkit (Marketplace)', cut: 'Sesame Cold Pressed', prices: { '0.25': null, '0.5': 220, '1': 430, '2': null }, perLiter: 430, commission: 20 },
+            { platform: 'Grofers/Blinkit (Value)', cut: 'Sesame Cold Pressed', prices: { '0.25': null, '0.5': 195, '1': 380, '2': null }, perLiter: 380, commission: 18 },
+            
+            // Cold Pressed Coconut Oil (High End/Niche)
+            { platform: 'BigBasket (BB Popular)', cut: 'Coconut Cold Pressed', prices: { '0.25': 120, '0.5': 240, '1': 470, '2': null }, perLiter: 470, commission: 12 },
+            { platform: 'Amazon Fresh (Local Brand)', cut: 'Coconut Cold Pressed', prices: { '0.25': 130, '0.5': 260, '1': 500, '2': null }, perLiter: 500, commission: 15 },
+            { platform: 'JioMart (Reliance CP Oil)', cut: 'Coconut Cold Pressed', prices: { '0.25': 115, '0.5': 230, '1': 450, '2': null }, perLiter: 450, commission: 10 },
+            { platform: 'Zepto (Store Brand)', cut: 'Coconut Cold Pressed', prices: { '0.25': null, '0.5': 250, '1': 490, '2': null }, perLiter: 490, commission: 18 },
+        ];
+        
+        // Oil price data for Hyderabad (Price per Liter, Commission %) - SIMULATED LOCAL BRANDS (8 ARCHETYPES)
+        const localMarketData = [
+            // Cold Pressed Groundnut Oil
+            { platform: 'Ghani Oil Master (Premium Local)', cut: 'Groundnut Cold Pressed', prices: { '0.25': 90, '0.5': 175, '1': 340, '2': 670 }, perLiter: 335, commission: 12 },
+            { platform: 'Traditional Chekku Oils', cut: 'Groundnut Cold Pressed', prices: { '0.25': 80, '0.5': 160, '1': 310, '2': 600 }, perLiter: 300, commission: 10 },
+            { platform: 'Health Oil House (Small Pack)', cut: 'Groundnut Cold Pressed', prices: { '0.25': 70, '0.5': 145, '1': 285, '2': null }, perLiter: 285, commission: 15 },
+            { platform: 'Bulk Oil Depot (2L Focus)', cut: 'Groundnut Cold Pressed', prices: { '0.25': null, '0.5': 150, '1': 295, '2': 570 }, perLiter: 285, commission: 8 },
+            
+            // Cold Pressed Sesame Oil
+            { platform: 'Ghani Oil Master (Premium Local)', cut: 'Sesame Cold Pressed', prices: { '0.25': 110, '0.5': 215, '1': 420, '2': null }, perLiter: 420, commission: 12 },
+            { platform: 'Traditional Chekku Oils', cut: 'Sesame Cold Pressed', prices: { '0.25': 95, '0.5': 190, '1': 370, '2': 730 }, perLiter: 365, commission: 10 },
+            { platform: 'Health Oil House (Small Pack)', cut: 'Sesame Cold Pressed', prices: { '0.25': 100, '0.5': 200, '1': 390, '2': null }, perLiter: 390, commission: 15 },
+            { platform: 'Value Oil Wholesaler (Bulk)', cut: 'Sesame Cold Pressed', prices: { '0.25': null, '0.5': 185, '1': 360, '2': 700 }, perLiter: 350, commission: 8 },
+            
+            // Cold Pressed Coconut Oil
+            { platform: 'Ghani Oil Master (Premium Local)', cut: 'Coconut Cold Pressed', prices: { '0.25': 125, '0.5': 250, '1': 490, '2': null }, perLiter: 490, commission: 12 },
+            { platform: 'Traditional Chekku Oils', cut: 'Coconut Cold Pressed', prices: { '0.25': 110, '0.5': 220, '1': 430, '2': 850 }, perLiter: 425, commission: 10 },
+            { platform: 'Health Oil House (Small Pack)', cut: 'Coconut Cold Pressed', prices: { '0.25': 115, '0.5': 230, '1': 450, '2': null }, perLiter: 450, commission: 15 },
+            { platform: 'Value Oil Wholesaler (Bulk)', cut: 'Coconut Cold Pressed', prices: { '0.25': null, '0.5': 215, '1': 420, '2': 820 }, perLiter: 410, commission: 8 },
+        ];
+
+
+        const platformsCountEl = document.getElementById('platforms-count');
+        const averagePriceEl = document.getElementById('average-price');
+        const highestCommissionEl = document.getElementById('highest-commission');
+        
+        // National Elements
+        const cutFilterNationalEl = document.getElementById('cut-filter-national');
+        const nationalPriceTableBodyEl = document.getElementById('national-price-table-body');
+        const selectPlatformEl = document.getElementById('select-platform');
+        const commissionDisplayEl = document.getElementById('commission-display');
+        const nationalCtx = document.getElementById('nationalPriceChart').getContext('2d');
+        const tabNationalBtn = document.getElementById('tab-national-btn');
+        const tabNationalContent = document.getElementById('tab-national-content');
+        
+        // Local Elements
+        const cutFilterLocalEl = document.getElementById('cut-filter-local');
+        const localPriceTableBody2El = document.getElementById('local-price-table-body2');
+        const localCtx2 = document.getElementById('localPriceChart2').getContext('2d');
+        const tabLocalBtn = document.getElementById('tab-local-btn');
+        const tabLocalContent = document.getElementById('tab-local-content');
+
+        // Profit Modeler Elements
+        const inputQuantityEl = document.getElementById('input-quantity'); 
+        const inputCogsEl = document.getElementById('input-cogs');
+        const inputMarginEl = document.getElementById('input-margin');
+        const calculateProfitBtn = document.getElementById('calculate-profit-btn');
+        const outputSupplierPriceEl = document.getElementById('output-supplier-price');
+        const outputRetailPriceEl = document.getElementById('output-retail-price');
+        const outputSupplierProfitEl = document.getElementById('output-supplier-profit');
+        const outputBrandMarginEl = document.getElementById('output-brand-margin');
+
+        // LLM Elements
+        const analyzePricingBtn = document.getElementById('analyze-pricing-btn');
+        const pricingStrategyOutputEl = document.getElementById('pricing-strategy-output');
+        const copyCutEl = document.getElementById('copy-cut'); 
+        const copyToneEl = document.getElementById('copy-tone'); 
+        const generateCopyBtn = document.getElementById('generate-copy-btn'); 
+        const marketingCopyOutputEl = document.getElementById('marketing-copy-output'); 
+
+        let nationalPriceChart;
+        let localPriceChart2;
+        let currentNationalMetrics = {}; 
+        let currentLocalMetrics = {}; 
+
+
+        async function fetchWithRetry(url, options, maxRetries = 5) {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    return response;
+                } catch (error) {
+                    if (i === maxRetries - 1) throw error;
+                    const delay = Math.pow(2, i) * 1000;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+        }
+        
+        function populateFilters() {
+            // Populate all filter/select elements
+            const nationalCuts = [...new Set(nationalMarketData.map(item => item.cut))];
+            const localCuts = [...new Set(localMarketData.map(item => item.cut))];
+            
+            const uniqueCuts = [...new Set([...nationalCuts, ...localCuts])];
+
+            const selectsToPopulate = [cutFilterNationalEl, cutFilterLocalEl, copyCutEl]; 
+            selectsToPopulate.forEach(selectEl => {
+                selectEl.innerHTML = '';
+                uniqueCuts.forEach(cut => {
+                    const option = document.createElement('option');
+                    option.value = cut;
+                    option.textContent = cut;
+                    selectEl.appendChild(option);
+                });
+            });
+            
+            // --- PROFIT MODELLER PLATFORM POPULATION (HYBRID) ---
+            const allMarketData = [...nationalMarketData, ...localMarketData];
+            
+            const uniquePlatforms = allMarketData.reduce((acc, item) => {
+                const prefix = nationalMarketData.some(n => n.platform === item.platform) ? "National: " : "Local: ";
+                const key = prefix + item.platform;
+                
+                if (!acc.find(p => p.key === key)) {
+                    acc.push({ 
+                        key: key, 
+                        platform: item.platform, 
+                        commission: item.commission 
+                    });
+                }
+                return acc;
+            }, []);
+
+            // Sort by commission descending for high-to-low analysis
+            uniquePlatforms.sort((a, b) => b.commission - a.commission);
+
+            selectPlatformEl.innerHTML = '';
+            uniquePlatforms.forEach(item => {
+                const optgroupLabel = item.key.startsWith("National") ? "National Platforms (High Commission)" : "Local Archetypes (Low Commission)";
+                
+                let optgroup = selectPlatformEl.querySelector(`optgroup[label="${optgroupLabel}"]`);
+                if (!optgroup) {
+                    optgroup = document.createElement('optgroup');
+                    optgroup.label = optgroupLabel;
+                    selectPlatformEl.appendChild(optgroup);
+                }
+
+                const option = document.createElement('option');
+                option.value = item.commission;
+                option.textContent = `${item.platform} (${item.commission}%)`;
+                optgroup.appendChild(option);
+            });
+            
+            // Set initial commission display based on the first item (Blinkit)
+            const initialCommission = uniquePlatforms[0].commission;
+            selectPlatformEl.value = initialCommission;
+            commissionDisplayEl.textContent = `Commission: ${initialCommission}%`;
+        }
+
+        function updateCommissionDisplay() {
+            const selectedCommission = selectPlatformEl.value;
+            commissionDisplayEl.textContent = `Commission: ${selectedCommission}%`;
+            calculateProfitModel(); 
+        }
+
+        function wrapText(str, maxWidth) {
+            const words = str.split(' ');
+            let lines = [];
+            let currentLine = words[0];
+        
+            for (let i = 1; i < words.length; i++) {
+                const word = words[i];
+                if (currentLine.length + word.length + 1 <= maxWidth) {
+                    currentLine += ' ' + word;
+                } else {
+                    lines.push(currentLine);
+                    currentLine = word;
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        function updateDashboard(nationalCut, localCut) {
+            updateNationalComparison(nationalCut);
+            updateLocalComparison(localCut);
+            calculateProfitModel(); 
+        }
+        
+        // --- TAB SWITCHING LOGIC ---
+        window.setActiveTab = function(tabName) {
+            if (tabName === 'national') {
+                tabNationalBtn.classList.add('active');
+                tabNationalContent.classList.remove('hidden');
+                tabLocalBtn.classList.remove('active');
+                tabLocalContent.classList.add('hidden');
+            } else if (tabName === 'local') {
+                tabNationalBtn.classList.remove('active');
+                tabNationalContent.classList.add('hidden');
+                tabLocalBtn.classList.add('active');
+                tabLocalContent.classList.remove('hidden');
+            }
+        }
+
+
+        /* --- NATIONAL COMPARISON LOGIC --- */
+
+        function updateNationalMetrics(data) {
+            if (data.length === 0) {
+                averagePriceEl.textContent = 'N/A';
+                highestCommissionEl.textContent = 'N/A';
+                currentNationalMetrics = { avg: 0, min: 0, max: 0, cut: cutFilterNationalEl.value, avgCommission: 0 };
+                return;
+            }
+
+            const prices = data.map(item => item.perLiter);
+            const total = prices.reduce((sum, price) => sum + price, 0);
+            const avg = total / data.length;
+            const avgCommission = data.reduce((sum, item) => sum + item.commission, 0) / data.length;
+            const min = Math.min(...prices);
+            const max = Math.max(...prices);
+            const highestCommission = data.reduce((maxItem, item) => item.commission > maxItem.commission ? item : maxItem, data[0]);
+
+            averagePriceEl.textContent = `₹${Math.round(avg)}`;
+            highestCommissionEl.textContent = `${highestCommission.commission}% (${highestCommission.platform})`;
+
+            currentNationalMetrics = { avg, min, max, cut: cutFilterNationalEl.value, platforms: data.length, avgCommission: Math.round(avgCommission) };
+        }
+
+        function updateNationalTable(data) {
+            nationalPriceTableBodyEl.innerHTML = '';
+            data.sort((a,b) => a.perLiter - b.perLiter).forEach(item => {
+                const row = document.createElement('tr');
+                row.className = "bg-white border-b border-gray-100 hover:bg-gray-50";
+                row.innerHTML = `
+                    <td class="px-6 py-4 font-medium text-gray-800 whitespace-nowrap">${item.platform}</td>
+                    <td class="px-3 py-4">${item.prices['0.25'] ? '₹' + item.prices['0.25'] : '-'}</td>
+                    <td class="px-3 py-4">${item.prices['0.5'] ? '₹' + item.prices['0.5'] : '-'}</td>
+                    <td class="px-3 py-4">${item.prices['1'] ? '₹' + item.prices['1'] : '-'}</td>
+                    <td class="px-3 py-4">${item.prices['2'] ? '₹' + item.prices['2'] : '-'}</td>
+                    <td class="px-6 py-4 font-semibold text-red-600">${item.commission}%</td>
+                    <td class="px-6 py-4 font-extrabold text-gray-800">₹${item.perLiter}</td>
+                `;
+                nationalPriceTableBodyEl.appendChild(row);
+            });
+        }
+
+        function updateNationalChart(data) {
+            data.sort((a,b) => b.perLiter - a.perLiter);
+            const labels = data.map(item => wrapText(item.platform, 16));
+            const prices = data.map(item => item.perLiter);
+            
+            if(nationalPriceChart) {
+                nationalPriceChart.destroy();
+            }
+
+            nationalPriceChart = new Chart(nationalCtx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Price per Liter (₹)',
+                        data: prices,
+                        backgroundColor: '#00838F',
+                        borderColor: '#006064',
+                        borderWidth: 1,
+                        borderRadius: 5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Price per Liter (₹)',
+                                font: {
+                                    weight: 'bold'
+                                },
+                                color: '#4B5563'
+                            },
+                            ticks: {
+                                color: '#4B5563'
+                            },
+                            grid: {
+                                color: '#E5E7EB'
+                            }
+                        },
+                        y: {
+                           ticks: {
+                                autoSkip: false,
+                                color: '#4B5563'
+                           },
+                           grid: {
+                                color: '#E5E7EB'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: function (context) {
+                                    return context[0].label.replace(/,/g, ' ');
+                                },
+                                label: function(context) {
+                                    return `Price: ₹${context.raw}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateNationalComparison(selectedCut) {
+            const filteredData = nationalMarketData.filter(item => item.cut === selectedCut);
+            updateNationalMetrics(filteredData);
+            updateNationalTable(filteredData);
+            updateNationalChart(filteredData);
+        }
+
+        /* --- LOCAL COMPARISON LOGIC (Section 2) --- */
+
+        function updateLocalTable(data) {
+            localPriceTableBody2El.innerHTML = '';
+            data.sort((a,b) => a.perLiter - b.perLiter).forEach(item => {
+                const row = document.createElement('tr');
+                row.className = "bg-white border-b border-gray-100 hover:bg-gray-50";
+                row.innerHTML = `
+                    <td class="px-6 py-4 font-medium text-gray-800 whitespace-nowrap">${item.platform}</td>
+                    <td class="px-3 py-4">${item.prices['0.25'] ? '₹' + item.prices['0.25'] : '-'}</td>
+                    <td class="px-3 py-4">${item.prices['0.5'] ? '₹' + item.prices['0.5'] : '-'}</td>
+                    <td class="px-3 py-4">${item.prices['1'] ? '₹' + item.prices['1'] : '-'}</td>
+                    <td class="px-3 py-4">${item.prices['2'] ? '₹' + item.prices['2'] : '-'}</td>
+                    <td class="px-6 py-4 font-semibold text-red-500">${item.commission}%</td>
+                    <td class="px-6 py-4 font-extrabold text-gray-800">₹${item.perLiter}</td>
+                `;
+                localPriceTableBody2El.appendChild(row);
+            });
+
+            if (data.length > 0) {
+                 const prices = data.map(item => item.perLiter);
+                 const total = prices.reduce((sum, price) => sum + price, 0);
+                 currentLocalMetrics.avg = total / data.length;
+            }
+        }
+
+        function updateLocalChart(data) {
+            data.sort((a,b) => b.perLiter - a.perLiter);
+            const labels = data.map(item => wrapText(item.platform, 16));
+            const prices = data.map(item => item.perLiter);
+            
+            if(localPriceChart2) {
+                localPriceChart2.destroy();
+            }
+
+            localPriceChart2 = new Chart(localCtx2, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Price per Liter (₹)',
+                        data: prices,
+                        backgroundColor: '#FFA000',
+                        borderColor: '#D97706',
+                        borderWidth: 1,
+                        borderRadius: 5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Price per Liter (₹)',
+                                font: {
+                                    weight: 'bold'
+                                },
+                                color: '#4B5563'
+                            },
+                            ticks: {
+                                color: '#4B5563'
+                            },
+                            grid: {
+                                color: '#E5E7EB'
+                            }
+                        },
+                        y: {
+                           ticks: {
+                                autoSkip: false,
+                                color: '#4B5563'
+                           },
+                           grid: {
+                                color: '#E5E7EB'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: function (context) {
+                                    return context[0].label.replace(/,/g, ' ');
+                                },
+                                label: function(context) {
+                                    return `Price: ₹${context.raw}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateLocalComparison(selectedCut) {
+            const filteredData = localMarketData.filter(item => item.cut === selectedCut);
+            updateLocalTable(filteredData);
+            updateLocalChart(filteredData);
+        }
+        
+        /* --- PROFIT MODELER LOGIC --- */
+        
+        function calculateProfitModel() {
+            const quantityLiters = parseFloat(inputQuantityEl.value) || 1; // Now in Liters
+            const cogsPerLiter = parseFloat(inputCogsEl.value) || 0;
+            const targetMarginPercent = parseFloat(inputMarginEl.value) || 0;
+            const commissionPercent = parseFloat(selectPlatformEl.value) || 0;
+
+            if (cogsPerLiter <= 0 || targetMarginPercent < 0 || commissionPercent >= 100) {
+                outputSupplierPriceEl.textContent = '₹0';
+                outputRetailPriceEl.textContent = '₹0';
+                outputSupplierProfitEl.textContent = '₹0';
+                outputBrandMarginEl.textContent = '₹0';
+                return;
+            }
+
+            const targetMarginDecimal = targetMarginPercent / 100;
+            const commissionDecimal = commissionPercent / 100;
+
+            // Calculate COGS for the selected quantity
+            const cogsForQuantity = cogsPerLiter * quantityLiters;
+
+            // 1. Supplier Sale Price (Priced to Brand) = COGS_Q * (1 + Margin)
+            const supplierSalePrice = cogsForQuantity * (1 + targetMarginDecimal);
+            
+            // 2. Brand Retail Price (Priced to Customer) = Supplier Price / (1 - Commission)
+            const brandRetailPrice = supplierSalePrice / (1 - commissionDecimal);
+            
+            // 3. Supplier Gross Profit = Supplier Price - COGS_Q
+            const supplierGrossProfit = supplierSalePrice - cogsForQuantity;
+            
+            // 4. Brand Gross Margin = Retail Price * Commission
+            const brandGrossMargin = brandRetailPrice * commissionDecimal;
+
+            outputSupplierPriceEl.textContent = `₹${Math.round(supplierSalePrice)}`;
+            outputRetailPriceEl.textContent = `₹${Math.round(brandRetailPrice)}`;
+            outputSupplierProfitEl.textContent = `₹${Math.round(supplierGrossProfit)}`;
+            outputBrandMarginEl.textContent = `₹${Math.round(brandGrossMargin)}`;
+        }
+
+
+        /* --- LLM TOOL LOGIC (uses National Metrics) --- */
+
+        async function analyzePricingStrategy() {
+            pricingStrategyOutputEl.innerHTML = '<div class="flex items-center justify-center h-full"><div class="loading-spinner"></div><span class="ml-3 text-gray-600">Analyzing market and strategizing...</span></div>';
+
+            const { avg, min, max, cut, avgCommission } = currentNationalMetrics;
+            if (!cut || avg === 0) {
+                pricingStrategyOutputEl.innerHTML = `<p class="text-red-500">Please select an oil type in the comparison section first or ensure data is available.</p>`;
+                return;
+            }
+
+            const targetMargin = 35; // Higher margin typical for homemade specialty products
+            const systemPrompt = "You are a senior financial and market analyst specializing in the premium edible oils sector. Analyze the provided competitor data, commission rates, and target profit margin. Recommend a primary pricing strategy (Premium, Value, or Match) for a new Homemade Cold-Pressed Oil brand and justify it concisely in one paragraph (max 100 words). Do not use bullet points or lists in the main text. Conclude with a final sentence that suggests target selling prices for 500ml and 1 Liter that achieve a 35% gross profit over the average competitor price, factoring in the average commission rate.";
+            const userQuery = `Analyze the Hyderabad market for the premium oil: "${cut}". Competitor price range is from Lowest (₹${min}/Liter) to Highest (₹${max}/Liter). The average retail price is ₹${Math.round(avg)}/Liter. The average platform commission is ${avgCommission}%. Recommend a pricing strategy assuming a supplier cost that allows for a ${targetMargin}% gross profit on the final selling price.`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            try {
+                const response = await fetchWithRetry(`${API_URL}?key=${API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                const strategyText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                
+                if (!strategyText) throw new Error("API returned no content.");
+                
+                pricingStrategyOutputEl.innerHTML = `<p class="text-gray-800 leading-relaxed">${strategyText}</p>`;
+
+            } catch (error) {
+                console.error("Gemini API Error:", error);
+                pricingStrategyOutputEl.innerHTML = `<p class="text-red-500">Error analyzing pricing: ${error.message}. Please try again.</p>`;
+            }
+        }
+
+        async function generateMarketingCopy() {
+            marketingCopyOutputEl.innerHTML = '<div class="flex items-center justify-center h-full"><div class="loading-spinner"></div><span class="ml-3 text-gray-600">Drafting copy...</span></div>';
+            
+            const oilType = copyCutEl.value;
+            const tone = copyToneEl.value;
+
+            const systemPrompt = "You are a highly creative and persuasive digital copywriter specializing in premium, healthy food products. Your tone must match the requested style. Write a single, short (max 3 sentences) marketing message for a social media post, including relevant health and cooking emojis, for the user's Cold-Pressed Cooking Oil product. Focus on purity, tradition, and flavor, depending on the tone.";
+            const userQuery = `Write a short social media post for our Homemade Cold-Pressed Oil, specific to the type: ${oilType}. The tone must be focused on: ${tone}.`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            try {
+                const response = await fetchWithRetry(`${API_URL}?key=${API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                const copyText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                
+                if (!copyText) throw new Error("API returned no content.");
+                
+                // Format the output as a stylized quote or text block
+                marketingCopyOutputEl.innerHTML = `
+                    <div class="border-l-4 border-green-600 pl-4 py-2">
+                        <p class="text-xl italic text-gray-800">${copyText}</p>
+                        <p class="text-sm text-gray-500 mt-2">— Generated Marketing Draft</p>
+                    </div>
+                `;
+
+            } catch (error) {
+                console.error("Gemini API Error:", error);
+                marketingCopyOutputEl.innerHTML = `<p class="text-red-500">Error generating marketing copy: ${error.message}. Please try again.</p>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const uniquePlatforms = new Set(nationalMarketData.map(d => d.platform));
+            platformsCountEl.textContent = uniquePlatforms.size;
+
+            populateFilters();
+            
+            // Set initial cuts for both filters
+            const initialNationalCut = cutFilterNationalEl.value || (nationalMarketData.length > 0 ? nationalMarketData[0].cut : 'N/A');
+            const initialLocalCut = cutFilterLocalEl.value || (localMarketData.length > 0 ? localMarketData[0].cut : 'N/A');
+            
+            // Initialize dashboard
+            updateDashboard(initialNationalCut, initialLocalCut);
+            setActiveTab('national'); // Set initial active tab
+
+            // Listeners
+            cutFilterNationalEl.addEventListener('change', (e) => updateDashboard(e.target.value, cutFilterLocalEl.value));
+            cutFilterLocalEl.addEventListener('change', (e) => updateDashboard(cutFilterNationalEl.value, e.target.value));
+
+            selectPlatformEl.addEventListener('change', updateCommissionDisplay);
+            inputQuantityEl.addEventListener('change', calculateProfitModel); 
+            inputCogsEl.addEventListener('input', calculateProfitModel);
+            inputMarginEl.addEventListener('input', calculateProfitModel);
+            calculateProfitBtn.addEventListener('click', calculateProfitModel);
+            
+            analyzePricingBtn.addEventListener('click', analyzePricingStrategy);
+            generateCopyBtn.addEventListener('click', generateMarketingCopy); 
+        });
+
+    </script>
+</body>
+</html>
